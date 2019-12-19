@@ -38,6 +38,7 @@ class Students
 	end
 
 	def print_debts_from_terminal(terminal_array)
+	end
 
 end
 
@@ -47,14 +48,21 @@ puts students.student_debt_sum
 
 students_hash = {}
 new_students_arr = []
+
 ARGV.each do |student_name, student_last_name|
-	hash[:student_name] = student_last_name
+	students_hash[:student_name] = student_last_name
 end
 
-hash.each do |student_name, student_last_name|
+students_hash.each do |student_name, student_last_name|
 	new_students_arr << "#{student_name}, #{student_last_name}" if students.students_array.include?(student_name) and students.students_array.include?(student_last_name)
 end
 
 CSV.open("/home/vabaco9/Desktop/MyRuby/day3/student_data.csv", "wb") do |csv|
 	new_students_arr.each do |student_whole_name|
-		csv << [st]
+		csv << [student_whole_name]
+	end
+end
+
+var = Student.new("Giorgi","Meladze",3.92,10423)
+puts var.gpa
+puts students_hash.include?(var.name)
