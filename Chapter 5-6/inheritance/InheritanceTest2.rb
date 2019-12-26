@@ -1,7 +1,7 @@
 require 'gserver'
 class LogServer < GServer
 	def initialize
-		super(12345)
+		super(2000)
 	end
 	def serve(client)
 		client.puts get_end_of_log_file
