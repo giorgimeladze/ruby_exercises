@@ -25,16 +25,27 @@ def printable(num)
 	end
 end
 
-begin 
+begin
 	printable(10)
 rescue
 	puts "couldn't go up to 10"
 end
-
+=begin
 if a == 5
 	e = MyError.new
 	puts e.print
 	raise MyError, "my exception"
 end
 
-#10.4 catch and throw
+puts Errno::EIO:Errno #???
+=end
+i = 0
+k = catch :quit_counting do
+  while true
+    print i," "
+    i += 1
+    throw(:quit_counting, 5) if i == 5
+  end
+end
+puts
+puts k
