@@ -16,13 +16,7 @@ class Grade
 	end
 
 	def <=> (other)
-		if @letter < other.letter
-			return 1
-		elsif @letter > other.letter
-			return -1
-		else
-			return 0
-		end
+		other.letter <=> @letter
 	end
 end
 
@@ -36,4 +30,5 @@ puts "a_grade > c_grade: #{a_grade > c_grade}"
 puts "f_grade < d_grade: #{f_grade < d_grade}"
 puts "b_grade > a_grade: #{b_grade > a_grade}"
 puts "a_grade == a_grade: #{a_grade == a_grade}"
+puts "b_grade == a_grade: #{a_grade >= a_grade}"
 
