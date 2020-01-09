@@ -5,10 +5,9 @@ def draw(board,instruction_board,round)
 	printf("%s %40s\n", "[#{board[6]}] [#{board[7]}] [#{board[8]}]","[#{instruction_board[6]}] [#{instruction_board[7]}] [#{instruction_board[8]}]")
 end 
 
-def is_full?(marked_board)
-	has_any_left = marked_board.include?(false)
-	puts !has_any_left
-	return !has_any_left
+def is_full?(marked_board, round)
+	return false if round != 5
+	return !marked_board.include?(false)
 end
 
 def player_turn(mark,player,board,instruction_board,marked_board,round)
@@ -40,9 +39,8 @@ def have_winner(player,mark,board)
 end
 
 def check_horizontal(mark,board)
-	row_length = Math.sqrt(board.length)
-	for i in 0..row_length-1 
-		if mark == board[row_length*i] && mark == board[row_length*i + 1] && mark == board[row_length*i + 2]
+	for i in 0..2 
+		if mark == board[3*i] && mark == board[3*i + 1] && mark == board[3*i + 2]
 			return true
 		end
 	end
@@ -50,9 +48,8 @@ def check_horizontal(mark,board)
 end
 
 def check_vertical(mark,board)
-	col_length = Math.sqrt(board.length)
-	for i in 0..col_length-1 
-		if mark == board[i] && mark == board[i + col_length] && mark == board[i + col_length + col_length]
+	for i in 0..2 
+		if mark == board[i] && mark == board[i + 3] && mark == board[i + 3 + 3]
 			return true
 		end
 	end
@@ -60,7 +57,6 @@ def check_vertical(mark,board)
 end
 
 def check_diagonal(mark,board)
-	row_length = Math.sqrt(board.length)
 	if board[0] == mark && board[4] == mark && board[8] == mark
 		return true
 	end
@@ -86,10 +82,10 @@ round = 1
 while true
 	player_turn(TIC,player1,board,instruction_board,marked_board,round)
 	break if have_winner(player1,TIC,board)
-	break if is_full?(marked_board)
+	break if is_full?(marked_board,round)
 	player_turn(TAC,player2,board,instruction_board,marked_board,round)
 	break if have_winner(player2,TAC,board)
-	break if is_full?(marked_board)
+	break if is_full?(marked_board,round)
 	round += 1
 end
 
