@@ -5,9 +5,9 @@ def draw(board,instruction_board,round)
 	printf("%s %40s\n", "[#{board[6]}] [#{board[7]}] [#{board[8]}]","[#{instruction_board[6]}] [#{instruction_board[7]}] [#{instruction_board[8]}]")
 end 
 
-def is_full?(marked_board, round)
+def full?(marked_board, round)
 	return false if round != 5
-	return !marked_board.include?(false)
+	!marked_board.include?(false)
 end
 
 def player_turn(mark,player,board,instruction_board,marked_board,round)
@@ -82,10 +82,10 @@ round = 1
 while true
 	player_turn(TIC,player1,board,instruction_board,marked_board,round)
 	break if have_winner(player1,TIC,board)
-	break if is_full?(marked_board,round)
+	break if full?(marked_board,round)
 	player_turn(TAC,player2,board,instruction_board,marked_board,round)
 	break if have_winner(player2,TAC,board)
-	break if is_full?(marked_board,round)
+	break if full?(marked_board,round)
 	round += 1
 end
 
