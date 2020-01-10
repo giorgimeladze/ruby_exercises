@@ -1,0 +1,1 @@
+black,white,yellow,red,brown,blue,green,purple,grey

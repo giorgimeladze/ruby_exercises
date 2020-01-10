@@ -3,9 +3,13 @@ class Animal
 
 	def initialize(specie,age,color,sex,count)
 		@specie = specie
-		@age = age
+		@age = age.to_i
 		@color = color
 		@sex = sex
-		@count = count
+		@count = count.to_i
 	end
+
+  def to_s
+    "#{@specie},#{@age},#{@color},#{@sex},#{@count}"
+  end
 end
