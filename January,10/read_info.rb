@@ -4,7 +4,7 @@ require_relative 'animal'
 @animals = []
 @species = []
 @colors = []
-@Sex = ["male","female"]
+@Sexes = ["male","female"]
 @Avaliable_categories = ["specie","age","color","sex","count"]
 
 def read_csv
@@ -40,16 +40,16 @@ end
 
 def details_to_choose(category)
 	if category.downcase.strip == "specie"
-		puts "Choose from these following conditions: #{@species}"
+		puts "Choose specie"
 		return "Sp"
 	elsif category.downcase.strip == "age"
 		puts "Choose age and <,> or =, with comma-separated"
 		return "A"
 	elsif category.downcase.strip == "color"
-		puts "Choose from these following conditions #{@colors}"
+		puts "Choose color"
 		return "Col"
 	elsif category.downcase.strip == "sex"
-		puts "Choose from these following conditions #{@Sex}"
+		puts "Choose sex"
 		return "Se"
 	elsif category.downcase.strip == "count"
 		puts "Choose count and <,>, or =, with comma-separated"
@@ -58,42 +58,18 @@ def details_to_choose(category)
 end			
 
 def species_chosen()
-	specie = ''
-	while true
-		specie = gets.downcase.strip
-		unless @species.include?(specie)
-			puts "try again"
-			next
-		end
-		break
-	end
-	@animals = @animals.select {|animal| animal.specie == specie}
+	specie = gets.downcase.strip
+	@animals = @animals.select {|animal| animal.specie.include?(specie)}
 end
 
 def colors_chosen()
-	color = ''
-	while true
-		color = gets.downcase.strip
-		if !@colors.include?(color)
-			puts "try again"
-			next
-		end
-		break
-	end
-	@animals = @animals.select {|animal| animal.color == color}
+	color = gets.downcase.strip
+	@animals = @animals.select {|animal| animal.color.include?(color)}
 end
 
 def sexes_chosen()
-	sex = ''
-	while true
-		sex = gets.downcase.strip
-		if !@Sex.include?(sex)
-			puts "try again"
-			next
-		end
-		break
-	end
-	@animals = @animals.select {|animal| animal.sex == sex}
+	sex = gets.downcase.strip
+	@animals = @animals.select {|animal| animal.sex.include?(sex)}
 end
 
 def ages_chosen()
@@ -161,7 +137,6 @@ def specification(categories)
 		category_chosen(key,)
 	end
 end
-
 
 #main
 categories = enter_categories_for_search()
