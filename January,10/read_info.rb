@@ -1,5 +1,6 @@
-require 'csv'
 require_relative 'animal'
+require_relative 'my_csv'
+require_relative 'category'
 
 @animals = []
 @species = []
@@ -7,16 +8,10 @@ require_relative 'animal'
 @Sexes = ["male","female"]
 @Avaliable_categories = ["specie","age","color","sex","count"]
 
-def read_csv
-  CSV.foreach("animal_data.csv", headers: true) do |row|
-    @animals << Animal.new(row["specie"],row["age"],row["color"],row["sex"],row["count"])
-  end
-  File.open("species.txt") do |file|
-    @species = file.gets.chomp.split(",")
-  end
-  File.open("colors.txt") do |file|
-    @colors = file.gets.chomp.split(",")
-  end
+def get_files()
+  MyCSV.read_info(@animals)
+  @species = MyCSV.file_read("/home/vabaco9/Desktop/MyRuby/January,10/species.txt")
+  @colors = MyCSV.file_read("/home/vabaco9/Desktop/MyRuby/January,10/colors.txt")
 end
 
 def enter_categories_for_search
@@ -56,94 +51,29 @@ def details_to_choose(category)
 		return "Cou"
 	end
 end			
-
-def species_chosen()
-	specie = gets.downcase.strip
-	@animals = @animals.select {|animal| animal.specie.include?(specie)}
-end
-
-def colors_chosen()
-	color = gets.downcase.strip
-	@animals = @animals.select {|animal| animal.color.include?(color)}
-end
-
-def sexes_chosen()
-	sex = gets.downcase.strip
-	@animals = @animals.select {|animal| animal.sex.include?(sex)}
-end
-
-def ages_chosen()
-	age = ''
-	expression = ''
-	while true
-		array = gets.chomp.split(",")
-		if array.length != 2 
-			puts "try again"
-			next
-		end
-		age = Integer(array[0].strip) rescue nil
-		expression = array[1].strip
-		if age == nil || (expression != '<' && expression != '>' && expression != '=')
-			puts "try again"
-			next
-		end
-		break
-	end
-	
-	if expression == "<"
-		@animals = @animals.select {|animal| animal.age < age}
-	elsif expression == ">"
-		@animals = @animals.select {|animal| animal.age > age}
-	else
-		@animals = @animals.select {|animal| animal.age == age}
-	end
-end
-
-def counts_chosen()
-	count = ''
-	expression = ''
-	while true
-		array = gets.chomp.split(",")
-		count = Integer(array[0]) rescue nil
-		expression = array[1].strip
-		if array.length != 2 || count == nil || (expression != '<' && expression != '>' && expression != '=')
-			puts "try again"
-			next
-		end
-		break
-	end
-	
-	if expression == "<"
-		@animals = @animals.select {|animal| animal.count < count}
-	elsif expression == ">"
-		@animals = @animals.select {|animal| animal.count > count}
-	else
-		@animals = @animals.select {|animal| animal.count == count}
-	end
-end
 	
 def category_chosen(key)
-	species_chosen() if key == "Sp"
-	ages_chosen() if key == "A"
-	counts_chosen() if key == "Cou"
-	sexes_chosen() if key == "Se"
-	colors_chosen() if key == "Col"
+	@animals = Category.species_chosen(@animals) if key == "Sp"
+	@animals = Category.ages_chosen(@animals) if key == "A"
+	@animals = Category.counts_chosen(@animals) if key == "Cou"
+	@animals = Category.sexes_chosen(@animals) if key == "Se"
+	@animals = Category.colors_chosen(@animals) if key == "Col"
 end
 
 def specification(categories)
 	categories.each do |category|
 		puts "Enter the detail which you would like to know about #{category}"
 		key = details_to_choose(category)
-		category_chosen(key,)
+		category_chosen(key)
 	end
 end
 
 #main
 categories = enter_categories_for_search()
-read_csv()
+get_files()
 specification(categories)
 if @animals.length == 0
-	puts "no such animal is found from base"
+	puts "no such animals is found in base"
 else
     @animals.each_with_index do |animal,index|
     	puts "#{index+1}) #{animal}"
