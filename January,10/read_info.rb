@@ -9,7 +9,7 @@ require_relative 'category'
 @Avaliable_categories = ["specie","age","color","sex","count"]
 
 def get_files()
-  MyCSV.read_info(@animals)
+  MyCSV.read_info("/home/vabaco9/Desktop/MyRuby/January,10/animal_data.csv", @animals)
   @species = MyCSV.file_read("/home/vabaco9/Desktop/MyRuby/January,10/species.txt")
   @colors = MyCSV.file_read("/home/vabaco9/Desktop/MyRuby/January,10/colors.txt")
 end

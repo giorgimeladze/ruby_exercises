@@ -60,7 +60,7 @@ while true
 	puts "Write animal with its specie, age, color, sex, and their count with comma-separated style"
 	animal_characts = gets.chomp.split(",")
 	animal = check_input_correctness(animal_characts)
-	MyCSV.add_info(animal)
+	MyCSV.add_info("/home/vabaco9/Desktop/MyRuby/January,10/animal_data.csv",animal)
 	puts "If you would like to stop, enter exit, to continue press any key"
-	break if gets.chomp == 'exit'
+	break if gets.chomp.strip == 'exit'
 end
