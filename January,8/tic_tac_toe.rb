@@ -66,6 +66,7 @@ def check_diagonal(mark,board)
 	false
 end
 
+#main
 board = Array.new(9,"")
 marked_board = Array.new(9,false) 
 instruction_board = [1,2,3,4,5,6,7,8,9]
